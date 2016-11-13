@@ -1,0 +1,55 @@
+#
+## Instalando o Ansible no CentOS 6.8 Final
+#
+
+Sistema Operacional : CentOS release 6.8 (Final)
+Kernel : 2.6.32-642.6.2.el6.x86_64
+
+#+++++++++++++++++++++++++++++++++++++++++++++++#
+# Pré-requisito					#
+#+++++++++++++++++++++++++++++++++++++++++++++++#
+
+# Desabilite o iptables
+service iptables stop
+service iptables6 stop
+
+# Desabilite o selinux
+/etc/sysconfig/selinux
+
+# Habilite o repositório EPEL
+yum install epel-release 
+
+# Instale as dependencias
+yum install -y make wget gcc gcc-c++ kernel-devel rpm rpm-build asciidoc git	\
+		python-setuptools python2-devel PyYAML python-crypto2.6 	\
+		python-httplib2 python-jinja2 python-keyczar python-paramiko 	\
+		python-six sshpass vim nano
+
+# Mude para o diretório "/usr/local/src"
+cd /usr/local/src
+
+# Baixando o código fonte diretamente do github
+git clone git://github.com/ansible/ansible.git --recursive
+
+# Mude para o diretório "ansible"
+cd ansible/
+
+# Construindo o pacote RPM
+make rpm
+
+# Instalando o pacote ansible
+rpm -Uvh ./rpm-build/ansible-*.noarch.rpm
+
+# Verifque se o diretório "/etc/ansible" foi criado.
+ls -lath /etc/ansible
+
+# Pronto o ansible está instalado na última versão.
+ansible --version
+
+#
+## Referência bibliografica
+#
+
+Fontes:
+	http://docs.ansible.com/ansible/intro_installation.html#latest-release-via-yum
+	http://fedoraproject.org/wiki/EPEL
