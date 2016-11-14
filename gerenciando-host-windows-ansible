@@ -1,0 +1,47 @@
+#
+## Gerenciando host Windows com ansible
+#
+
+# Instala o modulo pip do python.
+yum install -y python-pip.noarch
+
+# Instala o modulo pywinrm que será utilizando para comuicação com o host Windows.
+pip install "pywinrm>=0.1.1"
+
+# Configura as credenciais de acesso ao host remoto.
+vim /etc/ansible/group_vars/windows.yml
+ansible_user: administrador
+ansible_password: informeSenhaAdministrador
+ansible_port: 5986
+ansible_connection: winrm
+ansible_winrm_server_cert_validation: ignore
+
+# Verifica a permissão de execução de scripts Power Shell
+Powershell> Get-ExecutionPolicy
+Restricted
+
+# Permitir a execução de scripts sem qualquer restrição
+Powershell> Set-ExecutionPolicy Unrestricted
+
+Alteração da Política de Execução
+A política de execução ajuda a proteger contra scripts não confiáveis. A alteração da política de execução pode
+implicar exposição aos riscos de segurança descritos no tópico da ajuda about_Execution_Policies em
+http://go.microsoft.com/fwlink/?LinkID=135170. Deseja alterar a política de execução?
+[S] Sim  [N] Não  [U] Suspender  [?] Ajuda (o padrão é "S"): S
+
+# Personalizar a data de expiração do certificado gerado.
+Powershell> powershell.exe -File ConfigureRemotingForAnsible.ps1 -CertValidityDays 3650
+
+# Configurar winrm para ouvir em interfaces zona pública.
+Powershell> powershell.exe -File ConfigureRemotingForAnsible.ps1 -SkipNetworkProfileCheck
+
+# Força um novo certificado SSL para ser anexado a um ouvinte WinRM já existente.
+Powershell> powershell.exe -File ConfigureRemotingForAnsible.ps1 -ForceNewSSLCert
+
+# Testa a conexão com o host remoto.
+ansible windows -m win_ping
+
+
+Fonte:
+	https://paulosantanna.com/2012/10/14/habilitando-a-execucao-de-scripts-powershell/
+	http://docs.ansible.com/ansible/intro_windows.html
