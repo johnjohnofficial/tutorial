@@ -1,0 +1,112 @@
+WORKING DIRECTORY => STAGING AREA => GIT DIRECTORY
+
+
+//
+git config --global user.name ""
+git config --global user.email ""
+
+// File
+.gitignore
+
+//
+git init
+
+//
+git status
+
+//
+git add .
+git add *
+git add arquivo.txt
+
+//
+git commit -m "Primeiro commit"
+
+//
+git commit -a -m "Primeiro commit"
+
+//
+git diff
+
+//
+git diff --staged
+
+// Historico de commits
+git log
+
+// Lista todos os commits e o diff de cada arquivo.
+git log -p 
+
+// Filtrar a saída do log.
+git log -p -1
+
+// Exibe o código e mensagem de cada commit.
+git log --pretty=oneline
+
+//// Juntando commity /////
+git add .
+git commit -amend -m 'Comentário'
+
+// Remover arquivo da staged area 
+git reset HEAD <file>
+
+//// Reveter arquivo modificado para original ////
+git checkout -- <file>
+
+// Removendo arquivo do repositorio
+git rm <file>
+
+//
+git tag
+
+//
+git tag -a v1.0 -m 'Versao 1.0'
+
+//
+git tag -a v1.0 <index_commit> -m 'Versao 1.0'
+
+//
+git show <TAG>
+
+//
+git checkout <TAG>
+
+//
+git checkout master
+
+//
+git tag -d <TAG>
+
+//
+git branch <nome-branch>
+
+//
+git checkout <nome-branch>
+
+//
+git branch -b <nome-branch>
+
+//
+git merge <nome-branch>
+
+//
+git branch -d <nome-branch>
+
+//
+git init --bare
+
+//
+git clone file:////vnseven/projetos/cliente1 prjrede1
+
+//
+git remote
+
+//
+git push origin master
+
+//
+git pull origin master
+
+//
+git fetch origin <branch-name>
+
